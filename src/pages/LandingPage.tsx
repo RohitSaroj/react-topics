@@ -1,7 +1,11 @@
-import Basics from "../components/Basics";
+import Practice from "../components/Practice";
 
 const LandingPage = () => {
-  return <Basics />;
+  return (
+    <>
+      <Practice />
+    </>
+  );
 };
 
 export default LandingPage;
