@@ -3,6 +3,11 @@
 const CAT_API = 'https://catfact.ninja/fact';
 const GITHUB_USER_LIST = 'https://api.github.com/users';
 const GITHUB_USER = 'https://api.github.com/users/rohit-saroj';
+const USER_LIST = 'https://jsonplaceholder.typicode.com/users';
+const POSTS = 'https://jsonplaceholder.typicode.com/posts';
+const COMMENTS = 'https://jsonplaceholder.typicode.com/comments';
+const TODOS = 'https://jsonplaceholder.typicode.com/todos';
+const FIRST_TODO = 'https://jsonplaceholder.typicode.com/todos/1';
 
 
 document.addEventListener('click', () => console.log('clicked'));
@@ -186,5 +191,25 @@ const flatArrRecur = (inputArr) => {
   return outputArr;
 }
 console.log(flatArrRecur([1, [3, [5, 6], 4], 2]));
+
+const obj = { a: { b: { c: 1 }, d: 2 }, e: 3 }; 
+hashtag#output 
+["a.b.c", "a.d", "e"];
+
+const keysExtractor = (ob, path = "") => {
+ let output = [];
+ for (let key in ob) {
+ let newPath = path ? `${path}.${key}` : key;
+ if (typeof ob[key] === "object" && ob[key] !== null) {
+ output = output.concat(keysExtractor(ob[key], newPath));
+ } else {
+ output.push(newPath);
+ }
+ }
+ return output;
+};
+
+const obj = { a: { b: { c: 1 }, d: 2 }, e: 3 };
+console.log(keysExtractor(obj)); // ["a.b.c", "a.d", "e"]
 
 */
