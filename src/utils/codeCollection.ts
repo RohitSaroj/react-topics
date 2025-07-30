@@ -212,4 +212,78 @@ const keysExtractor = (ob, path = "") => {
 const obj = { a: { b: { c: 1 }, d: 2 }, e: 3 };
 console.log(keysExtractor(obj)); // ["a.b.c", "a.d", "e"]
 
+function debounce(fn, delay) {
+ let timer;
+ return (...args) => {
+  clearTimeout(timer);
+  timer = setTimeout(() => fn(...args), delay);
+ };
+}
+
+
+function throttle(fn, limit) {
+ let lastCall = 0;
+ return (...args) => {
+  const now = Date.now();
+  if (now - lastCall >= limit) {
+    lastCall = now;
+    fn(...args);
+  }
+ };
+}
+
+function maxProfit(prices) {
+  let minPrice = prices[0];
+  let maxProfit = 0;
+
+  for (let i = 1; i < prices.length; i++) {
+    const currentPrice = prices[i];
+    const potentialProfit = currentPrice - minPrice;
+
+    maxProfit = Math.max(maxProfit, potentialProfit);
+    minPrice = Math.min(minPrice, currentPrice);
+  }
+
+  return maxProfit;
+}
+
+const longestSubarraySumLessThanK = (arr, k) => {
+  let left = 0, right = 0;
+  let sum = 0;
+
+  let maxLen = 0;
+  let maxSum = 0;
+  let result = [-1, -1];
+
+  while (right < arr.length) {
+    sum += arr[right];
+
+    while (sum >= k && left <= right) {
+      sum -= arr[left];
+      left++;
+    }
+
+    let currentLen = right - left + 1;
+
+    if (
+      currentLen > maxLen ||
+      (currentLen === maxLen && sum > maxSum)
+    ) {
+      maxLen = currentLen;
+      maxSum = sum;
+      result = [left, right];
+    }
+
+    right++;
+  }
+
+  return {
+    length: maxLen,
+    startIndex: result[0],
+    endIndex: result[1],
+    subarray: result[0] !== -1 ? arr.slice(result[0], result[1] + 1) : [],
+    sum: maxSum
+  };
+};
+
 */

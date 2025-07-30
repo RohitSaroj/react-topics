@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import Context from "./context/provider.ts";
-import { ErrorBoundary } from "./Containers/ErrorBoundary.js";
+import { ErrorBoundary } from "./containers/ErrorBoundary.js";
 
 const rootElement = document.getElementById("root");
 const contextValue = {
-  contextValue: 'Context Value'
+  contextValue: "Context Value",
 };
 
 if (rootElement) {
@@ -18,7 +18,7 @@ if (rootElement) {
           <App />
         </ErrorBoundary>
       </Context.Provider>
-    </StrictMode >,
+    </StrictMode>,
   );
 } else {
   console.error("Root element not found!");
