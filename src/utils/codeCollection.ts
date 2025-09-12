@@ -8,6 +8,7 @@ const POSTS = 'https://jsonplaceholder.typicode.com/posts';
 const COMMENTS = 'https://jsonplaceholder.typicode.com/comments';
 const TODOS = 'https://jsonplaceholder.typicode.com/todos';
 const FIRST_TODO = 'https://jsonplaceholder.typicode.com/todos/1';
+const RECIPES = 'https://dummyjson.com/recipesd/search?select=id,name&q=${query}'
 
 
 document.addEventListener('click', () => console.log('clicked'));
@@ -54,6 +55,74 @@ const myFunc = function (id, city) {
 const result = myFunc.newBindWithoutApply(obj, 'Pune');
 result(['Mumbai', 'ABC']);
 
+/*
+  const p1 = new Promise((res, rej) => {
+      setTimeout(() => rej({ val: "P1" }), 1000);
+    });
+    const p2 = new Promise((res, rej) => {
+      setTimeout(() => rej({ val: "P2" }), 2000);
+    });
+
+    Promise.myAll = (promises) => {
+      return new Promise((resolve, reject) => {
+        if (!Array.isArray(promises)) {
+          return reject("Argument must be an array");
+        }
+        if (promises.length === 0) return resolve([]);
+
+        const results = [];
+        let completed = 0;
+
+        promises.forEach((promise) => {
+          Promise.resolve(promise)
+            .then((result) => {
+              results.push(result);
+              completed++;
+              if (promises.length === completed) {
+                resolve(results);
+              }
+            })
+            .catch((err) => {
+              errorOccured = true;
+              reject(err);
+            });
+        });
+      });
+    };
+
+    Promise.myAny = (promises) => {
+      return new Promise((resolve, reject) => {
+        if (!Array.isArray(promises)) {
+          return new TypeError("Argument must be an array");
+        }
+        if (promises.length === 0) {
+          return new AggregateError([], "All promises were rejected");
+        }
+
+        const rejections = [];
+        let rejected = 0;
+
+        promises.forEach((promise) => {
+          Promise.resolve(promise)
+            .then((result) => resolve(result))
+            .catch((error) => {
+              rejections.push(error);
+              rejected++;
+              if (rejected === promises.length) {
+                reject(
+                  new AggregateError(rejections, "All promises were rejected")
+                );
+              }
+            });
+        });
+      });
+    };
+
+    Promise.myAny([p1, p2])
+      .then((result) => console.log("myResult", result))
+      .catch((err) => console.error("myError", err));
+/*
+
 
 const swapTwoVariables = (a, b) => {
   a = a + b; // 3 = 1 + 2
@@ -61,49 +130,6 @@ const swapTwoVariables = (a, b) => {
   a = a - b;
   return [a, b];
 }
-
-
-var twoSum = function(nums, target) {
-  let res;
-  const hashMap = {};
-  for(let index = 0; index < nums.length; index++) { //O(n)
-    hashMap[nums[index]] = index;
-  }
-  for (let i = 0; i < nums.length; i++) {
-    const numNeeded = target - nums[i];
-    const currNum = hashMap[numNeeded];
-
-    if (currNum !== undefined && currNum !== i) {
-      res = [i, hashMap[numNeeded]];
-      break;
-    }
-  }
-  console.log(res);
-  return res;
-};
-
-twoSum([2,7,11,15], 9);
-
-
-var isPalindrome = function(x) {
-  let reverse = 0;
-  let temp = x;
-  if (x < 0) return false;
-  while(temp != 0)
-  {
-      const remainder = temp % 10;
-      if (remainder < 10) {
-        reverse = reverse + remainder;
-      } else {
-        reverse = reverse * 10 + remainder;
-      }
-      temp = temp/10;
-  }
-  console.log(reverse == x);
-  return reverse == x;
-};
-
-isPalindrome(121);
 
 
 const iterator = () => {
@@ -123,25 +149,7 @@ for (var i = 1; i <= 5; i++){
   }, i * 1000)})(i);
 }
 
-const input = ["apple", "mango", "apple", "banana", "apple"];
-// Output: ["apple", "mango", "banana"]
 
-const removeDuplicates = (inputArr) => {
-  if (Array.isArray(inputArr)) {
-    const hashMap = {};
-    const outputArr = [];
-
-    inputArr.forEach((val) => {
-      hashMap[val] = hashMap[val] > 0 ? hashMap[val] + 1 : 1;
-      if (hashMap[val] === 1) {
-        outputArr.push(val);
-      }
-    });
-
-    return outputArr;
-  }
-  return 'Not a valid input';
-}
 
 
 const catFact = fetch(CAT_API);
@@ -160,57 +168,7 @@ promise
   .catch(err => console.log(err))
 
 
-const factorial = (n) => {
-  if (n < 0) {
-    return 0;
-  } else if (n === 1) {
-    return 1;
-  } else {
-    return n * factorial(n - 1);
-  }
-}
 
-
-const flatArrRecur = (inputArr) => {
-  const outputArr = [];
-
-  const recursion = (index, inputArr, outputArr) => {
-    if (index >= inputArr.length) return;
-
-    const currVal = inputArr[index];
-    if (Array.isArray(currVal)) {
-      recursion(0, currVal, outputArr);
-    } else {
-      outputArr.push(currVal);
-    }
-
-    recursion(index + 1, inputArr, outputArr);
-  };
-  recursion(0, inputArr, outputArr);
-
-  return outputArr;
-}
-console.log(flatArrRecur([1, [3, [5, 6], 4], 2]));
-
-const obj = { a: { b: { c: 1 }, d: 2 }, e: 3 }; 
-hashtag#output 
-["a.b.c", "a.d", "e"];
-
-const keysExtractor = (ob, path = "") => {
- let output = [];
- for (let key in ob) {
- let newPath = path ? `${path}.${key}` : key;
- if (typeof ob[key] === "object" && ob[key] !== null) {
- output = output.concat(keysExtractor(ob[key], newPath));
- } else {
- output.push(newPath);
- }
- }
- return output;
-};
-
-const obj = { a: { b: { c: 1 }, d: 2 }, e: 3 };
-console.log(keysExtractor(obj)); // ["a.b.c", "a.d", "e"]
 
 function debounce(fn, delay) {
  let timer;
@@ -232,58 +190,76 @@ function throttle(fn, limit) {
  };
 }
 
-function maxProfit(prices) {
-  let minPrice = prices[0];
-  let maxProfit = 0;
 
-  for (let i = 1; i < prices.length; i++) {
-    const currentPrice = prices[i];
-    const potentialProfit = currentPrice - minPrice;
 
-    maxProfit = Math.max(maxProfit, potentialProfit);
-    minPrice = Math.min(minPrice, currentPrice);
+function startCountdown(seconds) {
+  const endTime = performance.now() + seconds * 1000
+  let lastLogged = seconds
+
+  function tick() {
+    const now = performance.now()
+    const remaining = Math.ceil((endTime - now) / 1000)
+    console.log('called');
+    if (remaining < lastLogged) {
+      console.log(remaining)
+      lastLogged = remaining
+    }
+
+    if (remaining > 0) {
+      requestAnimationFrame(tick)
+    } else {
+      console.log("Time's up!")
+    }
   }
 
-  return maxProfit;
+  console.log(seconds)
+  requestAnimationFrame(tick)
+}
+startCountdown(10)
+
+const isLessThanHalf = (event) => {
+  const {target} = event;
+  const boundingClientRect = target.getBoundingClientRect();
+  let mouseAt = event.clientX - boundingClientRect.left;
+  mouseAt = Math.round(Math.abs(mouseAt));
+  return mouseAt <= boundingClientRect.width / 2;
+};
+
+
+---------------------------------------------------------------
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    }
+    return function (...nextArgs) {
+      return curried.apply(this, args.concat(nextArgs));
+    };
+  };
 }
 
-const longestSubarraySumLessThanK = (arr, k) => {
-  let left = 0, right = 0;
-  let sum = 0;
+const sum = (a, b, c) => a + b + c;
 
-  let maxLen = 0;
-  let maxSum = 0;
-  let result = [-1, -1];
+const curriedSum = curry(sum);
 
-  while (right < arr.length) {
-    sum += arr[right];
+console.log(curriedSum(1)(2)(3), curriedSum(1,2,3));
 
-    while (sum >= k && left <= right) {
-      sum -= arr[left];
-      left++;
-    }
+function curryAll(fn) {
+  return function curried(...args) {
+    if (args.length === 0) return fn();
 
-    let currentLen = right - left + 1;
-
-    if (
-      currentLen > maxLen ||
-      (currentLen === maxLen && sum > maxSum)
-    ) {
-      maxLen = currentLen;
-      maxSum = sum;
-      result = [left, right];
-    }
-
-    right++;
-  }
-
-  return {
-    length: maxLen,
-    startIndex: result[0],
-    endIndex: result[1],
-    subarray: result[0] !== -1 ? arr.slice(result[0], result[1] + 1) : [],
-    sum: maxSum
+    return function (...nextArgs) {
+      if (nextArgs.length === 0) return fn.apply(this, args);
+      return curried.apply(this, args.concat(nextArgs));
+    };
   };
-};
+}
+
+const sum = (...nums) => nums.reduce((a, b) => a + b, 0);
+
+const curriedSum = curryAll(sum);
+
+console.log(curriedSum(1)(2)(3)(), curriedSum(1, 2, 3)());
+---------------------------------------------------------------
 
 */

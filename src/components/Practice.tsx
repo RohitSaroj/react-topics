@@ -1,36 +1,43 @@
-import { Suspense, useContext, useState } from "react";
+import { Suspense, useContext, useEffect, useMemo, useState } from "react";
 import Context from "../context/provider";
-import useDebounce from "../hooks/useDebounce";
-import useThrottle from "../hooks/useThrottle";
+import "./Practice.css";
+import InfiniteLoading from "./InfiniteLoading";
+import RequestAnimationFrameDemo from "./RequestAnimationFrameDemo";
+
+type Book = {
+  cover_i: number;
+  author_key: number[];
+  title: string;
+};
 
 const Practice = () => {
   const { contextValue } = useContext(Context);
-  const [value, setValue] = useState<string>("");
-  const [value2, setValue2] = useState<string>("");
-  const debouncedValue = useDebounce(value);
-  const throttledValue = useThrottle(value2);
+
+  useEffect(() => dsaPractice(), []);
+
+  const dsaPractice = () => {
+    // const longestSubarraySumLessThanK = (arr, k) => {};
+    // console.log(longestSubarraySumLessThanK([-1, 1, 5, 0, 5, -2, 9], 10));
+  };
+
+  const fetchBooks = async (query: string) => {
+    const res = await fetch(
+      `https://dummyjson.com/recipes/search?select=id,name&q=${query}`
+    );
+    const data = await res.json();
+    // const formattedData = data.docs.map((book: Book, idx: number) => ({
+    //   id: `${book.cover_i}-${book.author_key[0]}-${idx}`,
+    //   name: book.title,
+    // }));
+    return data.recipes;
+  };
 
   return (
     <Suspense fallback="Loading...">
       <div>
         <h3>Practice Component:</h3>
         {contextValue}
-        <div>
-          <input
-            type="text"
-            placeholder="Enter text to be debounced"
-            onChange={(e) => {
-              setValue(e.target.value);
-              setValue2(e.target.value);
-            }}
-          />
-          <br />
-          Debounced Value: <strong>{debouncedValue}</strong>
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;Throttled Value:{" "}
-          <strong>{throttledValue}</strong>
-          <script src="practice.js"></script>
-        </div>
+        <RequestAnimationFrameDemo />
       </div>
     </Suspense>
   );
